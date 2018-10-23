@@ -15,10 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf.urls import url
+from django.conf.urls import url, include
 from book_management import views
+from rest_framework import routers
 
+router = routers.DefaultRouter()
+router.register(r'users', restframe.views.UserViewSet)
+router.register(r'groups', restframe.views.GroupViewSet)
+
+# Wire up our API using automatic URL routing.
+# Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'my_index/$',views.index),
+    url(r'^', include(router.urls)),
+    url(r'api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
+
